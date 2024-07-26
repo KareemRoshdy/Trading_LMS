@@ -9,7 +9,7 @@ interface Props {
   };
 }
 
-export async function DELETE(request: NextRequest, { params }: Props) {
+export async function PUT(request: NextRequest, { params }: Props) {
   try {
     const { userId } = auth();
     const { courseId, chapterId } = params;
