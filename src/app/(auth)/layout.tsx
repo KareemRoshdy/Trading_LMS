@@ -1,3 +1,4 @@
+import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -5,7 +6,11 @@ export const metadata: Metadata = {
   description: "Authentication",
 };
 
-export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+
+const AuthLayout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="h-full flex items-center justify-center">{children}</div>
   );
