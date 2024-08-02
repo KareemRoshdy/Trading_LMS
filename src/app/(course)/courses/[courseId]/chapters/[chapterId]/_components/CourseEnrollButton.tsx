@@ -2,28 +2,44 @@
 
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
-import axios from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { Loader } from "rsuite";
 
 interface CourseEnrollButtonProps {
   price: number;
   courseId: string;
+  token: string;
+  chapterId: string;
 }
 
-const CourseEnrollButton = ({ price, courseId }: CourseEnrollButtonProps) => {
+const cardPayment = (token: string) => {
+  if (typeof window !== "undefined") {
+    console.log("Redirecting to payment URL with token:", token);
+
+    const iframeUrl = `https://accept.paymob.com/api/acceptance/iframes/858325?payment_token=${token}`;
+    window.location.href = iframeUrl;
+  } else {
+    console.error("window is not defined. Cannot redirect.");
+  }
+};
+
+const CourseEnrollButton = ({
+  price,
+  courseId,
+  token,
+  chapterId,
+}: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const onClick = async () => {
+  const onClick = () => {
     try {
       setIsLoading(true);
-
-      const res = await axios.post(`/api/courses/${courseId}/checkout`);
-
-      window.location.assign(res.data.url);
+      window.localStorage.setItem("courseId", courseId);
+      window.localStorage.setItem("chapterId", chapterId);
+      cardPayment(token);
+      console.log("click");
     } catch {
-      toast.error("Something went wrong");
+      console.log("[PAY_CLICK_ERROR:] Something error");
     } finally {
       setIsLoading(false);
     }

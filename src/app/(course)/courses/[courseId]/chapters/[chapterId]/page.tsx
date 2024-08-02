@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
 import CourseProgressButton from "./_components/CourseProgressButton";
+import { firstStep } from "@/utils/paymobToken";
 
 interface ChapterIdPageProps {
   params: {
@@ -43,6 +44,8 @@ const ChapterIdPage = async ({ params }: ChapterIdPageProps) => {
 
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
+
+  const token = await firstStep(course.price || 0);
 
   return (
     <div>
@@ -85,6 +88,8 @@ const ChapterIdPage = async ({ params }: ChapterIdPageProps) => {
               <CourseEnrollButton
                 courseId={params.courseId}
                 price={course.price!}
+                token={token}
+                chapterId={params.chapterId!}
               />
             )}
           </div>
