@@ -23,10 +23,12 @@ export const firstStep = async (amount: number) => {
 
 export const secondStep = async (token: string, amount: number) => {
   try {
+    const amountInCents = Math.round(amount * 100);
+
     const data = {
       auth_token: token,
       delivery_needed: "false",
-      amount_cents: `${amount * 100}`,
+      amount_cents: amountInCents,
       currency: "EGP",
       items: [],
     };
@@ -49,9 +51,11 @@ export const secondStep = async (token: string, amount: number) => {
 
 export const thirdStep = async (token: string, id: number, amount: number) => {
   try {
+    const amountInCents = Math.round(amount * 100);
+
     const data = {
       auth_token: token,
-      amount_cents: `${amount * 100}`,
+      amount_cents: amountInCents,
       expiration: 3600,
       order_id: id,
       billing_data: {

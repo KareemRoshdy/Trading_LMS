@@ -36,6 +36,7 @@ const CourseEnrollButton = ({
       setIsLoading(true);
       window.localStorage.setItem("courseId", courseId);
       window.localStorage.setItem("chapterId", chapterId);
+      
       cardPayment(token);
       console.log("click");
     } catch {
