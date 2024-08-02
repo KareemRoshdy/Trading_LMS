@@ -4,27 +4,29 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Verified } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Loader } from "rsuite";
 
 const SuccessPage = () => {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const searchParams = useSearchParams();
-
-  const success = searchParams.get("success");
-  const transaction_id = searchParams.get("id");
-  const hmac = searchParams.get("hmac");
-
-  let courseId = "";
-  let chapterId = "";
 
   const cleanURL = () => {
     const cleanUrl = window.location.origin + window.location.pathname;
     window.history.replaceState(null, "", cleanUrl);
   };
+
+  const success = searchParams.get("success");
+  const transaction_id = searchParams.get("id");
+  const hmac = searchParams.get("hmac");
+
+  const courseId = window.localStorage.getItem("courseId");
+  const chapterId = window.localStorage.getItem("chapterId");
 
   const successHandler = async () => {
     try {
@@ -44,9 +46,6 @@ const SuccessPage = () => {
   };
 
   useEffect(() => {
-    courseId = window.localStorage.getItem("courseId") || "";
-    chapterId = window.localStorage.getItem("chapterId") || "";
-
     if (success) {
       successHandler();
     }
