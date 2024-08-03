@@ -18,17 +18,17 @@ const SuccessPage = () => {
 
   const searchParams = useSearchParams();
 
-  const cleanURL = () => {
-    const cleanUrl = window.location.origin + window.location.pathname;
-    window.history.replaceState(null, "", cleanUrl);
-  };
-
   const success = searchParams.get("success");
   const transaction_id = searchParams.get("id");
   const hmac = searchParams.get("hmac");
 
   const courseId = window.localStorage.getItem("courseId");
   const chapterId = window.localStorage.getItem("chapterId");
+
+  const cleanURL = () => {
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState(null, "", cleanUrl);
+  };
 
   const successHandler = async () => {
     try {
@@ -54,11 +54,10 @@ const SuccessPage = () => {
   useEffect(() => {
     if (success) {
       successHandler();
+      setIsSuccess(true);
       cleanURL();
-    } else {
-      setIsSuccess(false);
     }
-  }, [courseId, router, success, chapterId, successHandler]);
+  }, []);
 
   return (
     <div className="flex items-center justify-center h-full">
