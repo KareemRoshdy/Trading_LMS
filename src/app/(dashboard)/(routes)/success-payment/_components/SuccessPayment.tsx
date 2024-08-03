@@ -38,7 +38,6 @@ const SuccessPayment = () => {
       toast.success("Course is Open");
     } catch (err: any) {
       setIsLoading(false);
-      console.log("error");
       console.log("error", err.message);
     } finally {
       setIsLoading(false);

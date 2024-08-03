@@ -14,8 +14,6 @@ interface CourseEnrollButtonProps {
 
 const cardPayment = (token: string) => {
   if (typeof window !== "undefined") {
-    console.log("Redirecting to payment URL with token:", token);
-
     const iframeUrl = `https://accept.paymob.com/api/acceptance/iframes/858325?payment_token=${token}`;
     window.location.href = iframeUrl;
   } else {
@@ -36,9 +34,8 @@ const CourseEnrollButton = ({
       setIsLoading(true);
       window.localStorage.setItem("courseId", courseId);
       window.localStorage.setItem("chapterId", chapterId);
-      
+
       cardPayment(token);
-      console.log("click");
     } catch {
       console.log("[PAY_CLICK_ERROR:] Something error");
     } finally {
