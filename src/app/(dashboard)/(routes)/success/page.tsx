@@ -40,7 +40,6 @@ const SuccessPage = () => {
       });
 
       toast.success("Course is Open");
-      router.push(`/courses/${courseId}/chapters/${chapterId}`);
     } catch (error: any) {
       console.log(error.message);
       setIsSuccess(false);
@@ -53,10 +52,12 @@ const SuccessPage = () => {
   useEffect(() => {
     if (success) {
       successHandler();
+
       setIsSuccess(true);
+      router.push(`/courses/${courseId}/chapters/${chapterId}`);
       cleanURL();
     }
-  }, []);
+  }, [successHandler, router, success, courseId, chapterId]);
 
   return (
     <div className="flex items-center justify-center h-full">
