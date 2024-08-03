@@ -46,6 +46,7 @@ const SuccessPage = () => {
       setIsLoading(false);
     } finally {
       setIsLoading(false);
+      cleanURL();
     }
   };
 
@@ -54,7 +55,6 @@ const SuccessPage = () => {
       successHandler();
 
       router.push(`/courses/${courseId}/chapters/${chapterId}`);
-      // cleanURL();
     }
   }, []);
 
