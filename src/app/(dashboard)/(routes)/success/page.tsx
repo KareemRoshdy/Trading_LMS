@@ -40,6 +40,8 @@ const SuccessPage = () => {
       });
 
       toast.success("Course is Open");
+      router.push(`/courses/${courseId}/chapters/${chapterId}`);
+      router.refresh();
     } catch (error: any) {
       console.log(error.message);
       setIsSuccess(false);
@@ -53,8 +55,6 @@ const SuccessPage = () => {
   useEffect(() => {
     if (success) {
       successHandler();
-
-      router.push(`/courses/${courseId}/chapters/${chapterId}`);
     }
   }, []);
 
