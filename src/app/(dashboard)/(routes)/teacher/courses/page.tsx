@@ -1,4 +1,3 @@
-import isAdmin from "@/lib/adminValidation";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 

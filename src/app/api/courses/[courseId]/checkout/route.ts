@@ -12,7 +12,12 @@ export async function POST(req: NextRequest, { params }: Props) {
     const user = await currentUser();
     const { transaction_id } = await req.json();
 
-    if (!user || !user.id || !user.emailAddresses?.[0]?.emailAddress) {
+    if (
+      !user ||
+      !user.id ||
+      !user.emailAddresses?.[0]?.emailAddress ||
+      !transaction_id
+    ) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
@@ -59,16 +64,14 @@ export async function POST(req: NextRequest, { params }: Props) {
           stripeCustomerId: transaction_id,
         },
       });
+
+      await prisma.purchase.create({
+        data: {
+          userId: user.id,
+          courseId: params.courseId,
+        },
+      });
     }
-
-    const created = await prisma.purchase.create({
-      data: {
-        userId: user.id,
-        courseId: params.courseId,
-      },
-    });
-
-    console.log("created");
 
     return NextResponse.json({ message: "course opened" }, { status: 201 });
   } catch (error) {

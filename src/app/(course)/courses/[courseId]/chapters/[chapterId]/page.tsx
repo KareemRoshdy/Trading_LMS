@@ -10,6 +10,8 @@ import { File } from "lucide-react";
 import CourseProgressButton from "./_components/CourseProgressButton";
 import { firstStep } from "@/utils/paymobToken";
 
+import Heading from "@/utils/Heading";
+
 interface ChapterIdPageProps {
   params: {
     courseId: string;
@@ -49,6 +51,11 @@ const ChapterIdPage = async ({ params }: ChapterIdPageProps) => {
 
   return (
     <div>
+      <Heading
+        title={chapter.title}
+        description="Watch and enjoy our curated video content designed to enhance your knowledge and skills. Explore videos on various topics, including trading strategies, market analysis, and more. Our videos are tailored to provide you with valuable insights and practical tips to help you achieve your financial goals. Stay tuned for new updates and featured content. شاهد واستمتع بمحتوى الفيديوهات المخصص الذي يهدف إلى تعزيز معرفتك ومهاراتك. استعرض الفيديوهات حول مواضيع متنوعة، بما في ذلك استراتيجيات التداول، تحليل السوق، والمزيد. تم تصميم فيديوهاتنا لتزويدك برؤى قيمة ونصائح عملية تساعدك في تحقيق أهدافك المالية. ترقب التحديثات الجديدة والمحتوى المميز."
+      />
+
       {userProgress?.isCompleted && (
         <Banner variant="success" label="You already completed this chapter." />
       )}
