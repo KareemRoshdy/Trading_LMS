@@ -64,14 +64,14 @@ export async function POST(req: NextRequest, { params }: Props) {
           stripeCustomerId: transaction_id,
         },
       });
-
-      await prisma.purchase.create({
-        data: {
-          userId: user.id,
-          courseId: params.courseId,
-        },
-      });
     }
+
+    await prisma.purchase.create({
+      data: {
+        userId: user.id,
+        courseId: params.courseId,
+      },
+    });
 
     return NextResponse.json({ message: "course opened" }, { status: 201 });
   } catch (error) {

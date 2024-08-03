@@ -36,6 +36,8 @@ const SuccessPayment = () => {
       });
 
       toast.success("Course is Open");
+      router.push(`/courses/${courseId}/chapters/${chapterId}`);
+      router.refresh();
     } catch (err: any) {
       setIsLoading(false);
       console.log("error", err.message);
