@@ -1,13 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { BadgeX, Verified } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import Loader from "@/components/Loader";
+import { BadgeX, Verified } from "lucide-react";
+import { helix } from "ldrs";
+helix.register();
 
 const SuccessPage = () => {
   const router = useRouter();
@@ -61,7 +63,7 @@ const SuccessPage = () => {
     <div className="flex items-center justify-center h-full">
       <div>
         {isLoading ? (
-          <Loader />
+          <l-helix size="45" speed="2.5" color="#0369a1"></l-helix>
         ) : (
           <>
             {isSuccess && (
