@@ -54,8 +54,8 @@ const SuccessPage = () => {
     if (success) {
       successHandler();
 
-      router.push(`/courses/${courseId}/chapters/${chapterId}`);
-      router.refresh();
+      // router.push(`/courses/${courseId}/chapters/${chapterId}`);
+      // router.refresh();
     }
   }, []);
 
