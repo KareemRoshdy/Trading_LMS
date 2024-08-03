@@ -53,11 +53,10 @@ const SuccessPage = () => {
     if (success) {
       successHandler();
 
-      setIsSuccess(true);
       router.push(`/courses/${courseId}/chapters/${chapterId}`);
-      cleanURL();
+      // cleanURL();
     }
-  }, [successHandler, router, success, courseId, chapterId]);
+  }, []);
 
   return (
     <div className="flex items-center justify-center h-full">
