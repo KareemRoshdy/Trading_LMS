@@ -33,25 +33,27 @@ const SuccessPage = () => {
   const successHandler = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.post(`/api/courses/${courseId}/checkout`, {
+      setIsSuccess(true);
+
+      await axios.post(`/api/courses/${courseId}/checkout`, {
         transaction_id,
       });
 
       toast.success("Course is Open");
+      router.push(`/courses/${courseId}/chapters/${chapterId}`);
     } catch (error: any) {
       console.log(error.message);
       setIsSuccess(false);
-      // toast.error(error.message);
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
+      setIsSuccess(false);
     }
   };
 
   useEffect(() => {
     if (success) {
-      setIsSuccess(true);
       successHandler();
-      router.push(`/courses/${courseId}/chapters/${chapterId}`);
       cleanURL();
     } else {
       setIsSuccess(false);
@@ -75,7 +77,7 @@ const SuccessPage = () => {
 
             {!isSuccess && (
               <>
-                <BadgeX className="flex items-center justify-center my-3 mx-auto text-green-700 w-40 h-40" />
+                <BadgeX className="flex items-center justify-center my-3 mx-auto text-red-700 w-40 h-40" />
 
                 <h2 className="mb-5 text-center">Payment Failed</h2>
               </>
