@@ -40,21 +40,22 @@ const SuccessPage = () => {
       });
 
       toast.success("Course is Open");
-      router.push(`/courses/${courseId}/chapters/${chapterId}`);
-      router.refresh();
     } catch (error: any) {
       console.log(error.message);
       setIsSuccess(false);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
-      cleanURL();
+      // cleanURL();
     }
   };
 
   useEffect(() => {
     if (success) {
       successHandler();
+
+      router.push(`/courses/${courseId}/chapters/${chapterId}`);
+      router.refresh();
     }
   }, []);
 
