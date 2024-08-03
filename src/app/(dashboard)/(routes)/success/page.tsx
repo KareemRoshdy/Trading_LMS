@@ -8,8 +8,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import { BadgeX, Verified } from "lucide-react";
-import { helix } from "ldrs";
-helix.register();
+import { Loader } from "rsuite";
 
 const SuccessPage = () => {
   const router = useRouter();
@@ -57,13 +56,13 @@ const SuccessPage = () => {
     } else {
       setIsSuccess(false);
     }
-  }, []);
+  }, [courseId, router, success, chapterId, successHandler]);
 
   return (
     <div className="flex items-center justify-center h-full">
       <div>
         {isLoading ? (
-          <l-helix size="45" speed="2.5" color="#0369a1"></l-helix>
+          <Loader inverse center content="loading..." />
         ) : (
           <>
             {isSuccess && (
