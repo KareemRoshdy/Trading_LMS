@@ -57,6 +57,7 @@ const SuccessPayment = () => {
         setIsSuccess(true);
         successHandler();
         router.push(`/courses/${courseId}/chapters/${chapterId}`);
+        router.refresh();
       } else {
         setIsSuccess(false);
         toast.error("Failed Payment");
