@@ -47,7 +47,6 @@ const SuccessPage = () => {
       setIsLoading(false);
     } finally {
       setIsLoading(false);
-      setIsSuccess(false);
     }
   };
 
