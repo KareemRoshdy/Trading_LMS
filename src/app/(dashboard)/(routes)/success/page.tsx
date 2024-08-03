@@ -2,17 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { Verified } from "lucide-react";
+import { BadgeX, Verified } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Loader } from "rsuite";
+import Loader from "@/components/Loader";
 
 const SuccessPage = () => {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const searchParams = useSearchParams();
 
@@ -36,9 +37,9 @@ const SuccessPage = () => {
       });
 
       toast.success("Course is Open");
-      cleanURL();
     } catch (error: any) {
       console.log(error.message);
+      setIsSuccess(false);
       // toast.error(error.message);
     } finally {
       setIsLoading(false);
@@ -47,7 +48,12 @@ const SuccessPage = () => {
 
   useEffect(() => {
     if (success) {
+      setIsSuccess(true);
       successHandler();
+      router.push(`/courses/${courseId}/chapters/${chapterId}`);
+      cleanURL();
+    } else {
+      setIsSuccess(false);
     }
   }, []);
 
@@ -55,24 +61,32 @@ const SuccessPage = () => {
     <div className="flex items-center justify-center h-full">
       <div>
         {isLoading ? (
-          <h2 className="mb-5 text-center">Loading...</h2>
+          <Loader />
         ) : (
           <>
-            <Verified className="flex items-center justify-center my-3 mx-auto text-green-700 w-40 h-40" />
+            {isSuccess && (
+              <>
+                <Verified className="flex items-center justify-center my-3 mx-auto text-green-700 w-40 h-40" />
 
-            <h2 className="mb-5 text-center">Payment Success</h2>
+                <h2 className="mb-5 text-center">Payment Success</h2>
+              </>
+            )}
+
+            {!isSuccess && (
+              <>
+                <BadgeX className="flex items-center justify-center my-3 mx-auto text-green-700 w-40 h-40" />
+
+                <h2 className="mb-5 text-center">Payment Failed</h2>
+              </>
+            )}
 
             <Button size="sm" className="text-center">
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <Link
-                  className="m-auto"
-                  href={`/courses/${courseId}/chapters/${chapterId}`}
-                >
-                  Back to the Course
-                </Link>
-              )}
+              <Link
+                className="m-auto"
+                href={`/courses/${courseId}/chapters/${chapterId}`}
+              >
+                Back to the Course
+              </Link>
             </Button>
           </>
         )}
