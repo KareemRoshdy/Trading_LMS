@@ -24,20 +24,73 @@ const SuccessPayment = () => {
 
   const success = searchParams.get("success");
   const transaction_id = searchParams.get("id");
+  const amount_cents = searchParams.get("amount_cents");
+  const created_at = searchParams.get("created_at");
+  const currency = searchParams.get("currency");
+  const error_occured = searchParams.get("error_occured");
+  const has_parent_transaction = searchParams.get("has_parent_transaction");
+  const integration_id = searchParams.get("integration_id");
+  const is_3d_secure = searchParams.get("is_3d_secure");
+  const is_auth = searchParams.get("is_auth");
+  const is_capture = searchParams.get("is_capture");
+  const is_refunded = searchParams.get("is_refunded");
+  const is_standalone_payment = searchParams.get("is_standalone_payment");
+  const is_voided = searchParams.get("is_voided");
+  const order = searchParams.get("order");
+  const owner = searchParams.get("owner");
+  const pending = searchParams.get("pending");
+  const source_data_pan = searchParams.get("source_data.pan");
+  const source_data_sub_type = searchParams.get("source_data.sub_type");
+  const source_data_type = searchParams.get("source_data.type");
   const hmac = searchParams.get("hmac");
+
+  const data = {
+    success,
+    transaction_id,
+    created_at,
+    amount_cents,
+    currency,
+    error_occured,
+    has_parent_transaction,
+    integration_id,
+    is_3d_secure,
+    is_auth,
+    is_capture,
+    is_refunded,
+    is_standalone_payment,
+    is_voided,
+    order,
+    owner,
+    pending,
+    source_data_pan,
+    source_data_sub_type,
+    source_data_type,
+  };
 
   const successHandler = async () => {
     try {
       setIsLoading(true);
       setIsSuccess(true);
 
-      await axios.post(`/api/courses/${courseId}/checkout`, {
-        transaction_id,
+      const res = await axios.post(`/api/verify-hmac`, {
+        data,
+        hmac,
       });
 
-      toast.success("Course is Open");
-      router.push(`/courses/${courseId}/chapters/${chapterId}`);
-      router.refresh();
+      const result = res.data.valid;
+
+      if (result) {
+        await axios.post(`/api/courses/${courseId}/checkout`, {
+          transaction_id,
+        });
+        toast.success("Course is Open");
+        router.push(`/courses/${courseId}/chapters/${chapterId}`);
+        router.refresh();
+      } else {
+        setIsSuccess(false);
+        toast.error("Failed Payment");
+        setIsLoading(false);
+      }
     } catch (err: any) {
       setIsLoading(false);
       console.log("error", err.message);
